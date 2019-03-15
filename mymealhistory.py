@@ -1,9 +1,9 @@
 import datetime
 import json
 import sys
-import boto
+import boto3
 
-print('Input MealTime.\nyyyymmdd or Hit Enter to set today')
+print('Input MealDate.\nyyyymmdd or Hit Enter to set today')
 inputdata = input('>>> ')
 
 if len(inputdata.rstrip()) == 0:
