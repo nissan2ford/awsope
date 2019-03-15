@@ -1,6 +1,7 @@
 import datetime
 import json
 import sys
+import boto
 
 print('Input MealTime.\nyyyymmdd or Hit Enter to set today')
 inputdata = input('>>> ')
@@ -44,3 +45,11 @@ dic["MealMethod"] = mealmethod
 
 json_dict = json.dumps(dic)
 print(json_dict)
+
+bucket_name = "mealhistory"
+json_key = "mealhistory.mh"
+s3 = boto3.resource('s3')
+obj = s3.Object(bucket_name,json_key)
+ 
+r = obj.put(Body = json_dict)
+ 
