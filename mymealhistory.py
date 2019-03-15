@@ -19,93 +19,39 @@ print('mealdate = ',mealdate)
 mealdatestr = str(mealdate)
 mealdatedt = datetime.datetime.strptime(mealdatestr,'%Y%m%d')
 
-print('mealdatestr = '+mealdatestr)
+#print('mealdatestr = '+mealdatestr)
 
 mealdatewday = mealdatedt.strftime('%a')
 
 print('todaywday = '+mealdatewday)
 
-mealtime = 'MOR'
+mealtimelist = ['MOR','LUN','DIN']
+#mealtime = 'MOR'
 
-print('Input Breakfast MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
-mealmethod = input('>>> ')
-mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
+for mealtime in mealtimelist:
+  print('MealTime is '+mealtime)
+  print('Input MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
+  mealmethod = input('>>> ')
+  mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
+  
+  if not any((s == mealmethod) for s in mealmethodcand):
+    print('Invalid MealMethod!')
+    sys.exit()
+  
+  dic = {}
+  
+  dic["MealTime"] = mealtime
+  dic["Date"] = mealdate
+  dic["Day_of_week"] = mealdatewday
+  dic["MealMethod"] = mealmethod
+  
+  json_dict = json.dumps(dic)
+  print(json_dict)
+  
+  bucket_name = "mealhistory"
+  obj_name = "mealhistoryItem.mh"
+  s3 = boto3.resource('s3')
+  obj = s3.Object(bucket_name,obj_name)
+  
+  r = obj.put(Body = json_dict)
 
-if not any((s == mealmethod) for s in mealmethodcand):
-  print('Invalid MealMethod!')
-  sys.exit()
-
-dic = {}
-
-
-dic["MealTime"] = mealtime
-dic["Date"] = mealdate
-dic["Day_of_week"] = mealdatewday
-dic["MealMethod"] = mealmethod
-
-json_dict = json.dumps(dic)
-print(json_dict)
-
-bucket_name = "mealhistory"
-obj_name = "mealhistoryItem.mh"
-s3 = boto3.resource('s3')
-obj = s3.Object(bucket_name,obj_name)
- 
-r = obj.put(Body = json_dict)
- 
-mealtime = 'LUN'
-
-print('Input Lunch MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
-mealmethod = input('>>> ')
-mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
-
-if not any((s == mealmethod) for s in mealmethodcand):
-  print('Invalid MealMethod!')
-  sys.exit()
-
-dic = {}
-
-
-dic["MealTime"] = mealtime
-dic["Date"] = mealdate
-dic["Day_of_week"] = mealdatewday
-dic["MealMethod"] = mealmethod
-
-json_dict = json.dumps(dic)
-print(json_dict)
-
-bucket_name = "mealhistory"
-obj_name = "mealhistoryItem.mh"
-s3 = boto3.resource('s3')
-obj = s3.Object(bucket_name,obj_name)
- 
-r = obj.put(Body = json_dict)
- 
-mealtime = 'DIN'
-
-print('Input Dinner MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
-mealmethod = input('>>> ')
-mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
-
-if not any((s == mealmethod) for s in mealmethodcand):
-  print('Invalid MealMethod!')
-  sys.exit()
-
-dic = {}
-
-
-dic["MealTime"] = mealtime
-dic["Date"] = mealdate
-dic["Day_of_week"] = mealdatewday
-dic["MealMethod"] = mealmethod
-
-json_dict = json.dumps(dic)
-print(json_dict)
-
-bucket_name = "mealhistory"
-obj_name = "mealhistoryItem.mh"
-s3 = boto3.resource('s3')
-obj = s3.Object(bucket_name,obj_name)
- 
-r = obj.put(Body = json_dict)
- 
