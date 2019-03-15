@@ -27,7 +27,7 @@ print('todaywday = '+mealdatewday)
 
 mealtime = 'MOR'
 
-print('Input MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
+print('Input Breakfast MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
 mealmethod = input('>>> ')
 mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
 
@@ -47,9 +47,65 @@ json_dict = json.dumps(dic)
 print(json_dict)
 
 bucket_name = "mealhistory"
-json_key = "mealhistory.mh"
+obj_name = "mealhistoryItem.mh"
 s3 = boto3.resource('s3')
-obj = s3.Object(bucket_name,json_key)
+obj = s3.Object(bucket_name,obj_name)
+ 
+r = obj.put(Body = json_dict)
+ 
+mealtime = 'LUN'
+
+print('Input Lunch MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
+mealmethod = input('>>> ')
+mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
+
+if not any((s == mealmethod) for s in mealmethodcand):
+  print('Invalid MealMethod!')
+  sys.exit()
+
+dic = {}
+
+
+dic["MealTime"] = mealtime
+dic["Date"] = mealdate
+dic["Day_of_week"] = mealdatewday
+dic["MealMethod"] = mealmethod
+
+json_dict = json.dumps(dic)
+print(json_dict)
+
+bucket_name = "mealhistory"
+obj_name = "mealhistoryItem.mh"
+s3 = boto3.resource('s3')
+obj = s3.Object(bucket_name,obj_name)
+ 
+r = obj.put(Body = json_dict)
+ 
+mealtime = 'DIN'
+
+print('Input Dinner MealMethod.\nCandidate:"Hom","Out","Onl","Nop","Buy"')
+mealmethod = input('>>> ')
+mealmethodcand = ['Hom','Out','Onl','Nop','Buy']
+
+if not any((s == mealmethod) for s in mealmethodcand):
+  print('Invalid MealMethod!')
+  sys.exit()
+
+dic = {}
+
+
+dic["MealTime"] = mealtime
+dic["Date"] = mealdate
+dic["Day_of_week"] = mealdatewday
+dic["MealMethod"] = mealmethod
+
+json_dict = json.dumps(dic)
+print(json_dict)
+
+bucket_name = "mealhistory"
+obj_name = "mealhistoryItem.mh"
+s3 = boto3.resource('s3')
+obj = s3.Object(bucket_name,obj_name)
  
 r = obj.put(Body = json_dict)
  
