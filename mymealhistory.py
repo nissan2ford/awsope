@@ -3,6 +3,10 @@ import json
 import sys
 import boto3
 
+print('Input bucket name.')
+bucket_name = input('>>> ')
+print('bucket name = '+bucket_name+'\n')
+
 print('Input MealDate.\nyyyymmdd or Hit Enter to set today')
 inputdata = input('>>> ')
 
@@ -23,10 +27,9 @@ mealdatedt = datetime.datetime.strptime(mealdatestr,'%Y%m%d')
 
 mealdatewday = mealdatedt.strftime('%a')
 
-print('todaywday = '+mealdatewday)
+print('todaywday = '+mealdatewday+'\n')
 
 mealtimelist = ['MOR','LUN','DIN']
-#mealtime = 'MOR'
 
 for mealtime in mealtimelist:
   print('MealTime is '+mealtime)
@@ -54,4 +57,5 @@ for mealtime in mealtimelist:
   obj = s3.Object(bucket_name,obj_name)
   
   r = obj.put(Body = json_dict)
-
+  
+  print(mealtime+' data upload completed.\n')
